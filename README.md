@@ -17,7 +17,7 @@ This is my first web application built using **Angular** and **Supabase**. The p
 To get started with the project, clone the repository and install the necessary dependencies.
 
 ```bash
-git clone https://github.com/TeoLoop/XChat.git
+git clone https://github.com/TeoLoop/ChatGo.git
 cd XChat
 ```
 
