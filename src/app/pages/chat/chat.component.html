@@ -1,6 +1,6 @@
 <main>
   <div class="container">
-    <h3 class="mb-3">XChat
+    <h3 class="mb-3">ChatGo
       <button (click)="logOut()" class="btn btn-outline-danger" style="float: right;">Cerrar Sesion</button>
       <button (click)="openUrlPopup()" class="btn btn-outline-success btn-rounded" style="float: right; margin-right: 10px;">↥Cargar Foto</button>
     </h3>
@@ -20,8 +20,8 @@
                     class="rounded-circle mr-1" alt="{{msg?.users?.full_name}}" width="40" height="40">
                   <div class="text-muted small text-nowrap mt-2">{{msg?.created_at | date: 'd/M/yy, h:mm a' }}</div>
                 </div>
-                <div class="flex-shrink-1 bg-light rounded py-2 px-3 ml-3">
-                  <div class="font-weight-bold mb-1">{{msg?.users?.full_name}}</div>
+                <div class="flex-shrink-1 bg-light py-2 px-3 ml-3 box-message">
+                  <div class="font-weight-bold mb-1"><strong>{{msg?.users?.full_name}}</strong></div>
                   {{msg?.text}}
                 </div>
                 <div class="dropdown">

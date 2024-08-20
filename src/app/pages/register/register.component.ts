@@ -51,6 +51,8 @@ export class RegisterComponent {
       if (result.error) {
         this.errorMessage=result.error.message
       }else{
+
+        localStorage.setItem('registrationMessage', 'Se ha enviado un correo de verificación. Por favor, revisa tu bandeja de entrada.');
         this.router.navigateByUrl('/login');
       }
     })

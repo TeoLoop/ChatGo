@@ -1,5 +1,5 @@
 <div class="container">
-  <h1 class="display-4 text-center">XChat</h1>
+  <h1 class="display-4 text-center">ChatGo</h1>
 </div>
 
 <form class="login-form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
@@ -31,3 +31,10 @@
     </div>
   </div>
 </section>
+
+<div *ngIf="registrationMessage" class="alert alert-success" role="alert">
+  <h4 class="alert-heading">¡Registro Exitoso!</h4>
+  <p>{{ registrationMessage }}</p>
+  <hr>
+  <p class="mb-0">Por favor, revisa tu bandeja de entrada y sigue las instrucciones para verificar tu cuenta.</p>
+</div>

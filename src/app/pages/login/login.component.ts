@@ -16,6 +16,8 @@ export class LoginComponent {
   private router= inject(Router);
   loginForm !: FormGroup;
   private fb = inject(FormBuilder);
+  registrationMessage: string | null = null;
+
   async handleAuth(){
     const response = await this.auth.signInGoogle()
   }
@@ -28,6 +30,13 @@ export class LoginComponent {
   }
 
   errorMessage: string | null= null;
+
+  ngOnInit(): void {
+    // Obtener el mensaje del almacenamiento local
+    this.registrationMessage = localStorage.getItem('registrationMessage');
+    // Limpiar el mensaje del almacenamiento local
+    localStorage.removeItem('registrationMessage');
+  }
 
   onSubmit(){
     const rawForm= this.loginForm.getRawValue();

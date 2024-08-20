@@ -24,6 +24,7 @@ export class ChatComponent {
   chatForm !: FormGroup;
   chats= signal<Ichat[]>([]);
   urlInput: string = '';
+  realtimeChats = this.chat_service.realtimeChats;
 
 
   constructor(){
@@ -34,6 +35,19 @@ export class ChatComponent {
     effect(() => {
       this.onListChat();
     })
+
+    effect(() => {
+      this.chats.set(this.realtimeChats()); // Actualizamos los chats cuando la señal de tiempo real cambia
+    }, { allowSignalWrites: true });
+  }
+
+  ngOnInit() {
+    // Cargar chats iniciales al iniciar el componente
+    this.chat_service.listChat().then(chats => {
+      if (chats) {
+        this.chat_service.realtimeChats.set(chats); // Inicializar con los datos actuales
+      }
+    });
   }
 
       async logOut(){

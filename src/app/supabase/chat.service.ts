@@ -9,12 +9,16 @@ import { Ichat } from '../interface/chat-response';
 export class ChatService {
   private supabase!: SupabaseClient;
   public savedChat= signal({});
+  public realtimeChats = signal<Ichat[]>([]); // Nueva señal para almacenar los mensajes en tiempo real
+
 
   constructor() {
     this.supabase= createClient(
       environment.supabaseUrl,
       environment.supabaseKey
     );
+    
+    this.subscribeToRealtimeChats(); // Suscribirnos a los cambios en tiempo real
   }
   
   async chatMessage(text: string){
@@ -60,6 +64,22 @@ export class ChatService {
     } catch(error){
       alert (error);
     }
+  }
+
+
+  subscribeToRealtimeChats() {
+    this.supabase
+      .channel('public:chat') // Suscribirse al canal de la tabla 'chat'
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'chat' }, (payload) => {
+        console.log('Change received!', payload);
+        // Actualizar los chats en tiempo real
+        this.listChat().then(chats => {
+          if (chats) {
+            this.realtimeChats.set(chats);
+          }
+        });
+      })
+      .subscribe();
   }
 
 }
