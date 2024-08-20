@@ -50,4 +50,16 @@ export class ChatService {
     this.savedChat.set(msg)
   }
 
+  async insertImage(avatar_url: string){
+    const { data: { session }, error: sessionError } = await this.supabase.auth.getSession();
+    try{
+      const {data, error}= await this.supabase.from('users').update({avatar_url}).eq('id',session?.user.id);
+      if (error){
+        alert (error.message);
+      }
+    } catch(error){
+      alert (error);
+    }
+  }
+
 }

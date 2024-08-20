@@ -10,27 +10,32 @@
               <form action="#" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
 
                 <div data-mdb-input-init class="form-outline mb-4">
+                  <label class="form-label" for="form3Example1cg">Nombre completo:</label>
                   <input type="text" id="form3Example1cg" class="form-control form-control-lg" formControlName="full_name" />
-                  <label class="form-label" for="form3Example1cg">Nombre</label>
                 </div>
 
                 <div data-mdb-input-init class="form-outline mb-4">
+                  <label class="form-label" for="form3Example3cg">Email:</label>
                   <input type="email" id="form3Example3cg" class="form-control form-control-lg" formControlName="email"/>
-                  <label class="form-label" for="form3Example3cg">Email</label>
                 </div>
 
                 <div data-mdb-input-init class="form-outline mb-4">
+                  <label class="form-label" for="form3Example4cg">Contraseña:</label>
                   <input type="password" id="form3Example4cg" class="form-control form-control-lg" formControlName="password"/>
-                  <label class="form-label" for="form3Example4cg">Contraseña</label>
                 </div>
 
                 <div data-mdb-input-init class="form-outline mb-4">
-                  <input type="password" id="form3Example4cdg" class="form-control form-control-lg" />
-                  <label class="form-label" for="form3Example4cdg">Repetir contraseña</label>
+                  <label class="form-label" for="form3Example4cdg">Repetir contraseña:</label>
+                  <input type="password" id="form3Example4cdg" class="form-control form-control-lg"
+                         [ngClass]="{'is-invalid': registerForm.hasError('passwordMismatch') && registerForm.get('confirm_password')?.touched}"
+                         formControlName="confirm_password" />
+                  <div *ngIf="registerForm.hasError('passwordMismatch') && registerForm.get('confirm_password')?.touched" class="text-danger">
+                    Las contraseñas no coinciden.
+                  </div>
                 </div>
 
                 <div class="form-check d-flex justify-content-center mb-5">
-                  <input class="form-check-input me-2" type="checkbox" value="" id="form2Example3cg" />
+                  <input class="form-check-input me-2" type="checkbox" value="" id="form2Example3cg" formControlName="terms"/>
                   <label class="form-check-label" for="form2Example3g">
                     Acepto todas las declaraciones en <a href="#!" class="text-body"><u>Terminos de servicio</u></a>
                   </label>
@@ -38,7 +43,7 @@
 
                 <div class="d-flex justify-content-center">
                   <button type="submit" data-mdb-button-init
-                    data-mdb-ripple-init class="btn btn-success btn-block btn-lg gradient-custom-4 text-body">Registrar</button>
+                    data-mdb-ripple-init class="btn btn-primary btn-lg" [disabled]="registerForm.invalid || !registerForm.get('terms')?.value">Registrarse</button>
                 </div>
 
                 <p class="text-center text-muted mt-5 mb-0">Ya tienes cuenta? <a href="/login"

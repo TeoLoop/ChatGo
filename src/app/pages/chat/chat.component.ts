@@ -1,16 +1,17 @@
 import { Component, effect, inject, signal } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormsModule, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ChatService } from '../../supabase/chat.service';
 import { Ichat } from '../../interface/chat-response';
 import { DatePipe } from '@angular/common';
 import { DeleteModalComponent } from '../../layout/delete-modal/delete-modal.component';
 
+
 @Component({
   selector: 'app-chat',
   standalone: true,
-  imports: [ReactiveFormsModule, DatePipe, DeleteModalComponent],
+  imports: [ReactiveFormsModule, DatePipe, DeleteModalComponent, FormsModule],
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.css'
 })
@@ -22,6 +23,7 @@ export class ChatComponent {
   private fb =inject(FormBuilder);
   chatForm !: FormGroup;
   chats= signal<Ichat[]>([]);
+  urlInput: string = '';
 
 
   constructor(){
@@ -79,5 +81,30 @@ export class ChatComponent {
       openDropDown(msg: Ichat){
         console.log(msg);
         this.chat_service.selectedChats(msg);
+      }
+
+
+      openUrlPopup() {
+        document.getElementById('urlPopup')!.style.display = 'block';
+      }
+    
+      closeUrlPopup() {
+        document.getElementById('urlPopup')!.style.display = 'none';
+      }
+    
+      processUrl() {
+        console.log('URL ingresada:', this.urlInput);
+
+        this.chat_service.insertImage(this.urlInput).then((res) =>{
+          console.log(res);
+          this.chatForm.reset();
+
+          this.onListChat();
+
+        }).catch((err) =>{
+          alert(err.message);
+        });
+        // Aquí puedes agregar la lógica para procesar la URL
+        this.closeUrlPopup();
       }
 }

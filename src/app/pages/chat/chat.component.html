@@ -1,6 +1,8 @@
 <main>
   <div class="container">
-    <h3 class="mb-3">ChatVault <button (click)="logOut()" class="btn btn-secondary" style="float: right;">Cerrar Sesion</button>
+    <h3 class="mb-3">XChat
+      <button (click)="logOut()" class="btn btn-outline-danger" style="float: right;">Cerrar Sesion</button>
+      <button (click)="openUrlPopup()" class="btn btn-outline-success btn-rounded" style="float: right; margin-right: 10px;">↥Cargar Foto</button>
     </h3>
     <div class="card">
       <div>
@@ -40,7 +42,7 @@
           <div class="flex-grow-0 py-3 px-4 border-top">
             <div class="input-group">
               <input formControlName="chat_message" type="text" class="form-control" placeholder="Escribir mensaje...">
-              <button [disabled]="!chatForm.valid" class="btn btn-primary">Enviar</button>
+              <button [disabled]="!chatForm.valid" class="btn btn-success">Enviar</button>
             </div>
           </div>
           </form>
@@ -52,3 +54,12 @@
 </main>
 
 <app-delete-modal />
+
+<div id="urlPopup" class="url-popup">
+  <div class="url-popup-content">
+    <span (click)="closeUrlPopup()" class="close">&times;</span>
+    <h4>Url de la imagen</h4>
+    <input [(ngModel)]="urlInput" type="text" class="form-control" placeholder="Ingrese la URL">
+    <button (click)="processUrl()" class="btn btn-primary">Aceptar</button>
+  </div>
+</div>
