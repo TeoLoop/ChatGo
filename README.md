@@ -18,7 +18,7 @@ To get started with the project, clone the repository and install the necessary 
 
 ```bash
 git clone https://github.com/TeoLoop/ChatGo.git
-cd XChat
+cd ChatGo
 ```
 
 Running the Application
