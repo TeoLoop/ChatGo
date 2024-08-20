@@ -1,76 +1,30 @@
-<!-- ## Database Table Schema -->
-## users table
+# My First WebApp with Angular and Supabase
 
-* id (uuid)
-* full_name (text)
-* avatar_url (text)
+This is my first web application built using **Angular** and **Supabase**. The project is designed to demonstrate the integration of Angular as the frontend framework and Supabase for backend services such as authentication, database management, and real-time data handling.
 
-## Creating a users table
+![Screenshot of the web app]
+![image](https://github.com/user-attachments/assets/e9a1a206-c407-48f2-9e34-9dcaec29039e)
+![image](https://github.com/user-attachments/assets/2c10e842-8b4e-4ee3-bb4f-05713584f15c)
 
-```sql
-CREATE TABLE public.users (
-   id uuid not null references auth.users on delete cascade,
-   full_name text NULL,
-   avatar_url text NULL,
-   primary key (id)
-);
+
+## Features
+
+- **Angular**: A powerful frontend framework for building dynamic web applications.
+- **Supabase**: A backend as a service that provides authentication, database management, and more.
+
+## Getting Started
+
+To get started with the project, clone the repository and install the necessary dependencies.
+
+```bash
+git clone https://github.com/TeoLoop/XChat.git
+cd XChat
 ```
 
-## Enable Row Level Security
+Running the Application
+To run the application locally, use the following command:
 
-```sql
-ALTER TABLE public.users ENABLE ROW LEVEL SECURITY;
+```bash
+ng serve
 ```
-
-## Permit Users Access Their Profile
-
-```sql
-CREATE POLICY "Permit Users to Access Their Profile"
-  ON public.users
-  FOR SELECT
-  USING ( auth.uid() = id );
-```
-
-## Permit Users to Update Their Profile
-
-```sql
-CREATE POLICY "Permit Users to Update Their Profile"
-  ON public.users
-  FOR UPDATE
-  USING ( auth.uid() = id );
-```
-
-## Supabase Functions
-
-```sql
-CREATE
-OR REPLACE FUNCTION public.user_profile() RETURNS TRIGGER AS $$ BEGIN INSERT INTO public.users (id, full_name,avatar_url)
-VALUES
-  (
-    NEW.id,
-    NEW.raw_user_meta_data ->> 'full_name'::TEXT,
-    NEW.raw_user_meta_data ->> 'avatar_url'::TEXT,
-  );
-RETURN NEW;
-END;
-$$ LANGUAGE plpgsql SECURITY DEFINER;
-```
-
-## Supabase Trigger
-
-```sql
-  CREATE TRIGGER
-  create_user_trigger
-  AFTER INSERT ON auth.users
-  FOR EACH ROW
-  EXECUTE PROCEDURE
-    public.user_profile();
-```
-
-## Chat_Messages table (Real Time)
-
-* id (uuid)
-* Created At (date)
-* text (text)
-* editable (boolean)
-* sender (uuid)
+Then, open your browser and navigate to http://localhost:4200/.
